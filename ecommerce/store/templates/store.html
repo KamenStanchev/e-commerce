@@ -3,22 +3,33 @@
 {% block content %}
 
 
-    <ul style="background-color: lightseagreen; font-size:  x-large; color: white">
-      <li style="display: inline; margin: 10px"><a style="color: white" href="{% url 'store' %}">ALL Category</a>
-      <li style="display: inline; margin: 10px"><a style="color: white" href="#">Select Category</a>
+
+    <ul style="background-color: lightseagreen; font-size:  large; color: white">
+        <li style="display: inline; margin-right: 33px"><a style="color: white" href="{% url 'store' %}">ALL Category</a>
+        <!-- Example single danger button -->
+        <div class="btn-group">
+          <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Categories
+          </button>
+          <div class="dropdown-menu">
+              {% for category in categories_dic %}
+                  <a class="dropdown-item" href="{% url 'product-by-category' category.pk %}">{{ category }}</a>
+              {% endfor %}
+          </div>
+        </div>
     </ul>
 
     <div class="row">
         {% for product in products %}
             <div class="col-lg-4">
-                <img class="thumbnail" src="{{ product.image }}" style="object-fit: contain;">
+                <img class="thumbnail" src="{{ product.image.url }}" style="object-fit: contain;">
                 <div class="box-element product">
                     <h6><strong>{{ product.name }}</strong></h6>
                     <hr>
 
                     <button class="btn btn-outline-secondary add-btn">Add to Cart</button>
                     <a class="btn btn-outline-success" href="#">View</a>
-                    <h4 style="display: inline-block; float: right; "><strong>BGN {{ product.price }}</strong></h4>
+                    <h4 style="display: inline-block; float: right; "><strong>BGN {{ product.price|floatformat:2 }}</strong></h4>
 
                 </div>
             </div>
