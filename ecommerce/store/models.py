@@ -23,6 +23,7 @@ class Product(models.Model):
     name = models.CharField(max_length=20)
     price = models.FloatField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='static/images/', blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -41,7 +42,7 @@ class Order(models.Model):
 class OrderItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.DO_NOTHING)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    quantity = models.IntegerField()
+    quantity = models.IntegerField(default=0)
     data_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
