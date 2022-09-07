@@ -65,7 +65,24 @@ def checkout(request):
 
 
 def add_product_to_cart(request, pk):
-    pass
+    customer = request.user.customer
+    product = Product.objects.get(id=pk)
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    items = order.orderitem_set.all()
+    product_in_ordered_items = order.orderitem_set.filter(order__orderitem__product=product)
+
+    # if product is already in cart -> increase its quantity and safe
+    if product_in_ordered_items:
+        for item in items:
+            if item.product.id == product.id:
+                item.quantity += 1
+                item.save()
+                return redirect('store')
+
+    # if product not in cart -> create new OrderItem with foreign key current product and safe
+    new_order_item = OrderItem.objects.create(product=product, order=order, quantity=1)
+    new_order_item.save()
+    return redirect('store')
 
 
 def increase_quantity_of_ordered_item(request, pk):
@@ -82,4 +99,3 @@ def decrease_quantity_of_ordered_item(request, pk):
     if ordered_item.quantity == 0:
         ordered_item.delete()
     return redirect('cart')
-
