@@ -22,7 +22,7 @@
     <div class="row">
         {% for product in products %}
             <div class="col-lg-4">
-                <img class="thumbnail" src="{{ product.image.url }}" style="object-fit: contain;">
+                <img class="thumbnail" src="{{ product.image.url }}" style="object-fit: contain;" alt="The product have not image yet.">
                 <div class="box-element product">
                     <h6><strong>{{ product.name }}</strong></h6>
                     <hr>

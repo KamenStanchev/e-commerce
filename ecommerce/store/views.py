@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
-from ecommerce.store.models import Product, Category
+from ecommerce.store.models import Product, Category, Order, OrderItem
 
 
 def store(request):
@@ -35,10 +35,51 @@ def product_by_category(request, pk):
 
 
 def cart(request):
-    context = {}
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+    else:
+        order = None
+        items = []
+    context = {
+        'items': items,
+        'order': order,
+    }
     return render(request, 'cart.html', context)
 
 
 def checkout(request):
-    context = {}
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+    else:
+        order = None
+        items = []
+    context = {
+        'items': items,
+        'order': order,
+    }
     return render(request, 'checkout.html', context)
+
+
+def add_product_to_cart(request, pk):
+    pass
+
+
+def increase_quantity_of_ordered_item(request, pk):
+    ordered_item = OrderItem.objects.get(id=pk)
+    ordered_item.quantity += 1
+    ordered_item.save()
+    return redirect('cart')
+
+
+def decrease_quantity_of_ordered_item(request, pk):
+    ordered_item = OrderItem.objects.get(id=pk)
+    ordered_item.quantity -= 1
+    ordered_item.save()
+    if ordered_item.quantity == 0:
+        ordered_item.delete()
+    return redirect('cart')
+

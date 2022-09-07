@@ -35,6 +35,14 @@ class Order(models.Model):
     complete = models.BooleanField(default=False)
     transaction_id = models.CharField(max_length=20, null=True, blank=True)
 
+    @property
+    def total_order_price(self):
+        result = 0
+        items = self.orderitem_set.all()
+        for item in items:
+            result += item.total_price
+        return result
+
     def __str__(self):
         return f'purchaser: {self.customer} order date: {self.date_ordered}'
 
@@ -44,6 +52,12 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=0)
     data_added = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def total_price(self):
+        result = self.quantity*self.product.price
+
+        return result
 
     def __str__(self):
         return f'product: {self.order} order {self.order}'
