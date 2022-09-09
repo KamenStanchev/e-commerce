@@ -79,7 +79,7 @@ def add_product_to_cart(request, pk):
                 item.save()
                 return redirect('store')
 
-    # if product not in cart -> create new OrderItem with foreign key current product and safe
+    # if product not in cart -> create new OrderItem with foreign key current product and safe.
     new_order_item = OrderItem.objects.create(product=product, order=order, quantity=1)
     new_order_item.save()
     return redirect('store')
