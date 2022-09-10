@@ -10,7 +10,6 @@ class ProductDetail(DetailView):
     context_object_name = 'product'
 
 
-
 def store(request):
     products = Product.objects.all()
     categories = Category.objects.all()
