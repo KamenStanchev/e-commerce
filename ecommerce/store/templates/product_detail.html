@@ -1,0 +1,40 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+
+
+    <ul style="background-color: lightseagreen; font-size:  large; color: white">
+        <li style="display: inline;"><h4 style="text-align: center; color: white;">{{ product.name }}</h4>
+        <!-- Example single danger button -->
+    </ul>
+
+    <div class="row">
+            <div class="col-lg-12">
+                <img class="thumbnail" src="{{ product.image.url }}" style="object-fit: contain; height: 500px" alt="The product have not image yet.">
+                <div class="box-element product">
+                    <h6>{{ product.description }}</h6>
+                    <hr>
+                    <h5>product category: <a href="{% url 'product-by-category' product.category.pk %}"><strong>{{ product.category|upper }}</strong></a></h5>
+                    <hr>
+
+
+
+                    <a class="btn btn-outline-secondary add-btn" href="{% url 'add_product_to_cart' product.id %}">Add to Cart</a>
+                    <h4 style="display: inline-block; float: right; "><strong>BGN {{ product.price|floatformat:2 }}</strong></h4>
+
+                </div>
+            </div>
+
+
+
+    </div>
+
+
+
+{% endblock %}
+
+
+
+
+

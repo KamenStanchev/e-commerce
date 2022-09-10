@@ -1,6 +1,14 @@
 from django.shortcuts import render, redirect
+from django.views.generic.detail import DetailView
 
 from ecommerce.store.models import Product, Category, Order, OrderItem
+
+
+class ProductDetail(DetailView):
+    model = Product
+    template_name = 'product_detail.html'
+    context_object_name = 'product'
+
 
 
 def store(request):

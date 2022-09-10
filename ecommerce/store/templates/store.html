@@ -28,7 +28,7 @@
                     <hr>
 
                     <a class="btn btn-outline-secondary add-btn" href="{% url 'add_product_to_cart' product.id %}">Add to Cart</a>
-                    <a class="btn btn-outline-success" href="#">View</a>
+                    <a class="btn btn-outline-success" href="{% url 'product_details' product.id %}">View</a>
                     <h4 style="display: inline-block; float: right; "><strong>BGN {{ product.price|floatformat:2 }}</strong></h4>
 
                 </div>
