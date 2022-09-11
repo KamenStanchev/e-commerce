@@ -4,8 +4,9 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('', include('ecommerce.store.urls')),
+    path('user/', include('ecommerce.users.urls')),
 ]
 
 # if settings.DEBUG:

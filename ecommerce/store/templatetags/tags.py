@@ -7,12 +7,17 @@ register = template.Library()
 
 @register.simple_tag
 def total_order_items(request):
+    result = 0
     if not request.user.is_authenticated:
-        return 0
+        return result
+
+    if not request.user.customer:
+        return result
+
     customer = request.user.customer
     order, created = Order.objects.get_or_create(customer=customer, complete=False)
     items = order.orderitem_set.all()
-    result = 0
+
     if items:
         for item in items:
             result += item.quantity

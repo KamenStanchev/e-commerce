@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views.generic.detail import DetailView
 
@@ -84,12 +85,12 @@ def add_product_to_cart(request, pk):
             if item.product.id == product.id:
                 item.quantity += 1
                 item.save()
-                return redirect('store')
+                return redirect(request.META.get('HTTP_REFERER', 'store'))
 
     # if product not in cart -> create new OrderItem with foreign key current product and safe.
     new_order_item = OrderItem.objects.create(product=product, order=order, quantity=1)
     new_order_item.save()
-    return redirect('store')
+    return redirect(request.META.get('HTTP_REFERER', 'store'))
 
 
 def increase_quantity_of_ordered_item(request, pk):
