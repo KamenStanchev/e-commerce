@@ -2,17 +2,21 @@
 {% load static %}
 {% block content %}
 
+
     <div class="row">
         <div class="col-lg-6">
             <div class="box-element" id="form-wrapper">
-                <form>
+                <form method="post" action="{% url 'checkout' %}">
+                    {% csrf_token %}
                     <div id="user-info">
                         <div class="form-field">
-                            <input required class="form-control" type="text" name="name" placeholder="Name....">
+                            <label style="display: block">Name</label>
+                            {{ form.name }}
                         </div>
 
                         <div class="form-field">
-                            <input required class="form-control" type="email" name="email" placeholder="Email...">
+                            <label style="display: block">Email</label>
+                            {{ form.email }}
                         </div>
                     </div>
 
@@ -21,16 +25,16 @@
                         <p>Shipping Information</p>
                         <hr>
                         <div class="form-field">
-                            <input class="form-control" type="text" name="address" placeholder="Address...">
+                            {{ form1.address }}
                         </div>
                         <div class="form-field">
-                            <input class="form-control" type="text" name="city" placeholder="City...">
+                            {{ form1.city }}
                         </div>
                         <div class="form-field">
-                            <input class="form-control" type="text" name="zipcode" placeholder="Zipcode...">
+                            {{ form1.zipcode }}
                         </div>
                         <div class="form-field">
-                            <input class="form-control" type="text" name="country" placeholder="Country...">
+                            {{ form1.country }}
                         </div>
                     </div>
 

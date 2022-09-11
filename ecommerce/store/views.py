@@ -2,7 +2,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views.generic.detail import DetailView
 
-from ecommerce.store.models import Product, Category, Order, OrderItem
+from ecommerce.store.forms import CustomerForm, ShippingAddressForm
+from ecommerce.store.models import Product, Category, Order, OrderItem, ShippingAddress
 
 
 class ProductDetail(DetailView):
@@ -58,17 +59,28 @@ def cart(request):
 
 
 def checkout(request):
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        items = order.orderitem_set.all()
-    else:
-        order = None
-        items = []
+    customer = request.user.customer
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    items = order.orderitem_set.all()
+    shipping_address, created = ShippingAddress.objects.get_or_create(customer=customer, order=order)
+
+    if request.method == 'POST':
+        form = CustomerForm(request.POST, instance=customer)
+        form1 = ShippingAddressForm(request.POST, instance=shipping_address)
+        if form.is_valid() and form1.is_valid():
+            form.save()
+            form1.save()
+            return redirect('checkout')
+
+    form = CustomerForm(instance=customer)
+    form1 = ShippingAddressForm(instance=shipping_address)
     context = {
         'items': items,
         'order': order,
+        'form': form,
+        'form1': form1,
     }
+
     return render(request, 'checkout.html', context)
 
 
