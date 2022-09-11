@@ -1,11 +1,9 @@
-from django.contrib.auth import authenticate, login, forms
-from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout, views
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
-from django.views.generic import View
 
-
+from ecommerce.store.models import Customer
 from ecommerce.users.forms import NewUserForm
 
 
@@ -24,6 +22,13 @@ def login_page(request):
 
         if user is not None:
             login(request, user)
+            customer, created = Customer.objects.get_or_create(user=user)
             return redirect('store')
 
     return render(request, 'login.html')
+
+
+class LogoutView(generic.View):
+    def get(self, request):
+        logout(request)
+        return redirect('store')

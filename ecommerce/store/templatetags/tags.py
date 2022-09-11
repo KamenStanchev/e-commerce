@@ -11,10 +11,11 @@ def total_order_items(request):
     if not request.user.is_authenticated:
         return result
 
-    if not request.user.customer:
+    try:
+        customer = request.user.customer
+    except:
         return result
 
-    customer = request.user.customer
     order, created = Order.objects.get_or_create(customer=customer, complete=False)
     items = order.orderitem_set.all()
 
