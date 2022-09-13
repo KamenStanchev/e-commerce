@@ -1,6 +1,9 @@
+from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
 from django.views.generic.detail import DetailView
+
 
 from ecommerce.store.forms import CustomerForm, ShippingAddressForm
 from ecommerce.store.models import Product, Category, Order, OrderItem, ShippingAddress
@@ -70,6 +73,24 @@ def checkout(request):
         if form.is_valid() and form1.is_valid():
             form.save()
             form1.save()
+
+            customer_name = form.cleaned_data['name']
+            customer_email = form.cleaned_data['email']
+
+            customer_address = form1.cleaned_data['address']
+            customer_city = form1.cleaned_data['city']
+            customer_zipcode = form1.cleaned_data['zipcode']
+            customer_country = form1.cleaned_data['country']
+
+            html_to_customer = render_to_string('emails/email_to_customer.html', {
+                'customer_name': customer_name,
+                'shipping_address': f"{customer_country}, {customer_zipcode}, {customer_city}, {customer_address}",
+                'items': items,
+            })
+
+            send_mail(f'{customer_name}','This is content, is this' , f'{customer_email}',
+                      ['kamenstanchev81@gmail.com', 'k.s@abv.bg'], fail_silently=True, html_message=html_to_customer)
+
             return redirect('checkout')
 
     form = CustomerForm(instance=customer)

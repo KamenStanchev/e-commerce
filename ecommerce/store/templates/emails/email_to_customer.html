@@ -1,0 +1,29 @@
+You make purchase from our web store!
+
+
+<div class="col-lg-6">
+    <div style="box-shadow:hsl(0, 0%, 80%) 0 0 16px;
+	background-color: #fff;
+	border-radius: 4px;
+	padding: 10px;">
+        <h3>Order Summary</h3>
+        <hr>
+        {% for item in items %}
+            <div style="display: flex;
+                align-items: flex-stretch;
+                padding-bottom: 10px;
+                margin-bottom: 10px;
+                border-bottom: 1px solid #ececec;">
+                <div style="flex: 2"><img class="row-image" src="{{ item.product.image.url }}"></div>
+                <div style="flex: 2"><p>{{ item.product.name }}</p></div>
+                <p>BGN&nbsp;&nbsp;</p>
+                <div style="flex: 1"><p>{{ item.product.price|floatformat:2 }}</p></div>
+                <div style="flex: 1"><p>x{{ item.quantity }}</p></div>
+            </div>
+        {% endfor %}
+
+        <h5>Items: <strong>{{ items|length }}</strong></h5>
+        <h5>Total: <strong>BGN {{ order.total_order_price|floatformat:2 }}</strong></h5>
+
+    </div>
+</div>
