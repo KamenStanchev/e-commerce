@@ -85,11 +85,11 @@ def checkout(request):
             html_to_customer = render_to_string('emails/email_to_customer.html', {
                 'customer_name': customer_name,
                 'shipping_address': f"{customer_country}, {customer_zipcode}, {customer_city}, {customer_address}",
-                'items': items,
+                'items': items, 'order': order
             })
 
-            send_mail(f'{customer_name}','This is content, is this' , f'{customer_email}',
-                      ['kamenstanchev81@gmail.com', 'k.s@abv.bg'], fail_silently=True, html_message=html_to_customer)
+            send_mail(f'{customer_name}','This is content, is this', 'no_reply@ecommerce.com',
+                      [{customer_email}], fail_silently=True, html_message=html_to_customer)
 
             return redirect('checkout')
 
@@ -100,6 +100,7 @@ def checkout(request):
         'order': order,
         'form': form,
         'form1': form1,
+        'customer': customer,
     }
 
     return render(request, 'checkout.html', context)
