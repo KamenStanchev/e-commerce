@@ -88,7 +88,7 @@ def checkout(request):
                 'items': items, 'order': order
             })
 
-            send_mail(f'{customer_name}','This is content, is this', 'no_reply@ecommerce.com',
+            send_mail(f'{customer_name}','', 'no_reply@ecommerce.com',
                       [{customer_email}], fail_silently=True, html_message=html_to_customer)
 
             return redirect('checkout')
