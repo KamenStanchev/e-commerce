@@ -1,3 +1,4 @@
+from decouple import config
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -88,8 +89,8 @@ def checkout(request):
                 'items': items, 'order': order
             })
 
-            send_mail(f'{customer_name}','', 'no_reply@ecommerce.com',
-                      [{customer_email}], fail_silently=True, html_message=html_to_customer)
+            send_mail(f'{customer_name}','Text to message', 'kamen.stanchev.work@gmail.com',
+                      [{customer_email}], html_message=html_to_customer)
 
             return redirect('checkout')
 
