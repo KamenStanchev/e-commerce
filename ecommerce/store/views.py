@@ -5,7 +5,6 @@ from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.views.generic.detail import DetailView
 
-
 from ecommerce.store.forms import CustomerForm, ShippingAddressForm
 from ecommerce.store.models import Product, Category, Order, OrderItem, ShippingAddress
 
@@ -89,10 +88,16 @@ def checkout(request):
                 'items': items, 'order': order
             })
 
-            send_mail(f'{customer_name}','Text to message', 'kamen.stanchev.work@gmail.com',
-                      [{customer_email}], html_message=html_to_customer)
+            send_mail(f'{customer_name}', 'Text to message', 'kamen.stanchev.work@gmail.com',
+                      [customer_email], html_message=html_to_customer)
 
-            return redirect('checkout')
+            send_mail(f'New purchase from: {customer_name}', 'Text to message', 'kamen.stanchev.work@gmail.com',
+                      ['kamenstanchev81@gmail.com'], html_message=html_to_customer)
+
+            order.complete = True
+            order.save()
+
+            return redirect('store')
 
     form = CustomerForm(instance=customer)
     form1 = ShippingAddressForm(instance=shipping_address)
