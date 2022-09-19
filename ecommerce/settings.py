@@ -32,8 +32,9 @@ EMAIL_HOST = config('EMAIL_HOST')
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = config('EMAIL_PORT')
-# EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -45,6 +46,8 @@ INSTALLED_APPS = [
 
     'ecommerce.store',
     'ecommerce.users',
+
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -138,3 +141,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#S3 BUCKETS CONFIG
+
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_FILE_OVERWRITE = config('AWS_S3_FILE_OVERWRITE', cast=bool)
+AWS_DEFAULT_ACL = None
+DEFAULT_FILE_STORAGE = config('DEFAULT_FILE_STORAGE')
+# STATICFILES_STORAGE = config('STATICFILES_STORAGE')
