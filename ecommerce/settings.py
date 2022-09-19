@@ -24,7 +24,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = ['e-commerce-kamen-stanchev.herokuapp.com/', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['e-commerce-kamen-stanchev.herokuapp.com', 'localhost', '127.0.0.1']
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
