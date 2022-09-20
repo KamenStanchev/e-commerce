@@ -113,6 +113,8 @@ def checkout(request):
 
 
 def add_product_to_cart(request, pk):
+    if not request.user.is_authenticated:
+        return redirect('login')
     customer = request.user.customer
     product = Product.objects.get(id=pk)
     order, created = Order.objects.get_or_create(customer=customer, complete=False)
