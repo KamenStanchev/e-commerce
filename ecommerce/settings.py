@@ -55,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'ecommerce.urls'
@@ -134,20 +135,11 @@ STATICFILES_STORAGE = config('STATICFILES_STORAGE')
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [os.path.join(BASE_DIR, '/static/')]
-
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, '/static/')]
 
 MEDIA_URL = '/images/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# S3 BUCKETS CONFIG
-
-# AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
-# AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
-# AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
-# AWS_S3_FILE_OVERWRITE = config('AWS_S3_FILE_OVERWRITE', cast=bool)
-# AWS_DEFAULT_ACL = None
-# DEFAULT_FILE_STORAGE = config('DEFAULT_FILE_STORAGE')
-# STATICFILES_STORAGE = config('STATICFILES_STORAGE')
