@@ -2,7 +2,7 @@
 You make purchase from our web store!
 
 
-<div class="col-lg-6">
+<div style="margin-top: 10px;">
     <div style="box-shadow:hsl(0, 0%, 80%) 0 0 16px;
 	background-color: #fff;
 	border-radius: 4px;
@@ -15,7 +15,7 @@ You make purchase from our web store!
                 padding-bottom: 10px;
                 margin-bottom: 10px;
                 border-bottom: 1px solid #ececec;">
-                <div style="flex: 2"><img class="row-image" src="{{ item.product.image.url }}"></div>
+                <div style="flex: 2"><img style="width: 100px;" src="{{ item.product.image.url }}"></div>
                 <div style="flex: 2"><p>{{ item.product.name }}</p></div>
                 <p>BGN&nbsp;&nbsp;</p>
                 <div style="flex: 1"><p>{{ item.product.price|floatformat:2 }}</p></div>
