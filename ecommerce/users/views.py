@@ -13,6 +13,9 @@ class UserRegister(generic.CreateView):
     template_name = 'register.html'
     success_url = reverse_lazy('store')
 
+    def form_valid(self, form):
+        messages.success(self.request, 'Account created successfully.')
+        return super().form_valid(form)
 
 
 def login_page(request):
@@ -25,6 +28,7 @@ def login_page(request):
         if user is not None:
             login(request, user)
             customer, created = Customer.objects.get_or_create(user=user)
+            messages.info(request, 'You successfully login.')
             return redirect('store')
         else:
             messages.error(request, f'User name: "{username}" or password is not correct.')
@@ -35,4 +39,5 @@ def login_page(request):
 class LogoutView(generic.View):
     def get(self, request):
         logout(request)
+        messages.info(request, 'You successfully logout.')
         return redirect('store')
