@@ -1,4 +1,5 @@
 from decouple import config
+from django.contrib import messages
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -97,6 +98,8 @@ def checkout(request):
             order.complete = True
             order.save()
 
+            messages.info(request, 'Your order is completed and we are preparing it to delivery.')
+
             return redirect('store')
 
     form = CustomerForm(instance=customer)
@@ -114,6 +117,7 @@ def checkout(request):
 
 def add_product_to_cart(request, pk):
     if not request.user.is_authenticated:
+        messages.info(request, 'You must be registered to add product to cart')
         return redirect('login')
     customer = request.user.customer
     product = Product.objects.get(id=pk)
@@ -127,11 +131,13 @@ def add_product_to_cart(request, pk):
             if item.product.id == product.id:
                 item.quantity += 1
                 item.save()
+                messages.info(request, 'The quantity of the product has been increased.')
                 return redirect(request.META.get('HTTP_REFERER', 'store'))
 
     # if product not in cart -> create new OrderItem with foreign key current product and safe.
     new_order_item = OrderItem.objects.create(product=product, order=order, quantity=1)
     new_order_item.save()
+    messages.info(request, 'The product has been added to cart.')
     return redirect(request.META.get('HTTP_REFERER', 'store'))
 
 
@@ -139,6 +145,7 @@ def increase_quantity_of_ordered_item(request, pk):
     ordered_item = OrderItem.objects.get(id=pk)
     ordered_item.quantity += 1
     ordered_item.save()
+    messages.info(request, 'The quantity of the product has been increased.')
     return redirect('cart')
 
 
@@ -146,6 +153,8 @@ def decrease_quantity_of_ordered_item(request, pk):
     ordered_item = OrderItem.objects.get(id=pk)
     ordered_item.quantity -= 1
     ordered_item.save()
+    messages.info(request, 'The quantity of the product has been decreased.')
     if ordered_item.quantity == 0:
         ordered_item.delete()
+        messages.info(request, '... and the product has been removed from cart!')
     return redirect('cart')
