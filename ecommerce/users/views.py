@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, views
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -13,6 +14,7 @@ class UserRegister(generic.CreateView):
     success_url = reverse_lazy('store')
 
 
+
 def login_page(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -24,6 +26,8 @@ def login_page(request):
             login(request, user)
             customer, created = Customer.objects.get_or_create(user=user)
             return redirect('store')
+        else:
+            messages.error(request, f'User name: "{username}" or password is not correct.')
 
     return render(request, 'login.html')
 
