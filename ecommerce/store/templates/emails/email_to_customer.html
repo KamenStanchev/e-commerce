@@ -1,30 +1,50 @@
-<h3>Hello {{ customer_name }}</h3>
+<style>
+    .item-column{
+        margin: 10px;
+        background-color: lightskyblue;
+        border: black;
+        border-width: 1px;
+        border-style: solid;
+    }
+    #item-container{
+        display: flex;
+        flex-direction: row;
+        margin: 1px 10px;
+        border: black;
+        border-width: 1px;
+        border-style: solid;
+        background-color: yellow;
+        font-weight: bolder;
+        flex-wrap: nowrap;
+    }
+</style>
+
+<h3 xmlns="http://www.w3.org/1999/html">Hello {{ customer_name }}</h3>
 You make purchase from our web store!
 
-
-<div style="margin-top: 10px;">
-    <div style="box-shadow:hsl(0, 0%, 80%) 0 0 16px;
-	background-color: #fff;
-	border-radius: 4px;
-	padding: 10px;">
         <h3>Order Summary</h3>
         <hr>
-        {% for item in items %}
-            <div style="display: flex;
-                align-items: flex-stretch;
-                padding-bottom: 10px;
-                margin-bottom: 10px;
-                border-bottom: 1px solid #ececec;">
-                <div style="flex: 2"><p><img style="width: 100px;" src="{{ item.product.image.url }}"></p></div>
-                <div style="flex: 2"><p>{{ item.product.name }}</p></div>
-                <p>BGN&nbsp;&nbsp;</p>
-                <div style="flex: 1"><p>{{ item.product.price|floatformat:2 }}</p></div>
-                <div style="flex: 1"><p>x{{ item.quantity }}</p></div>
-            </div>
-        {% endfor %}
+
+            {% for item in items %}
+
+                <div id="item-container">
+                    <div style="flex: 2" class="item-column">
+                        <img src="{{ item.product.image.url }}">
+                    </div>
+                    <div style="flex: 2" class="item-column">
+                        <p>{{ item.product.name }}</p>
+                    </div>
+                    <div style="flex: 1" class="item-column">
+                        <p>BGN&nbsp;&nbsp;{{ item.product.price|floatformat:2 }}</p>
+                    </div>
+                    <div style="flex: 1" class="item-column">
+                        <p>x{{ item.quantity }}</p>
+                    </div>
+                </div>
+
+            {% endfor %}
 
         <h5>Items: <strong>{{ items|length }}</strong></h5>
         <h5>Total: <strong>BGN {{ order.total_order_price|floatformat:2 }}</strong></h5>
 
-    </div>
-</div>
+
