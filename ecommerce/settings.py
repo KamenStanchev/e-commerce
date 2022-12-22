@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'ecommerce.store',
     'ecommerce.users',
 
-    'storages',
+    # 'storages',
 ]
 
 MIDDLEWARE = [
