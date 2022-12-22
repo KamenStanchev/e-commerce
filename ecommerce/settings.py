@@ -22,10 +22,10 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', None) == 'True'
 
-ALLOWED_HOSTS = ['https://kamen-ecommerce.up.railway.app']
+ALLOWED_HOSTS = ['*']
 
 # TODO
-CSRF_TRUSTED_ORIGINS = []
+CSRF_TRUSTED_ORIGINS = ['https://kamen-ecommerce.up.railway.app']
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
